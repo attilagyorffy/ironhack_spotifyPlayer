@@ -1,12 +1,11 @@
 
 $('.btn-play').on('click', function(e){
   if ($(this).hasClass('playing')) {
-      $(this).removeClass('playing');
       $('.js-player').trigger('pause');
     } else {
-      $(this).addClass('playing');
       $('.js-player').trigger('play');
     }
+    $(this).toggleClass('playing');
   });
 
 $('.author').on('click', function(e){
@@ -39,7 +38,7 @@ $('.js-artist-list').on('click', 'a',function(e){
 
 function fetchTracks (trackName) {
   var request = $.get('https://api.spotify.com/v1/search?type=track&query='+trackName);
-  
+
   function handleTracks (tracks) {
 
     var track = tracks.tracks.items[0];
@@ -70,7 +69,7 @@ function fetchAuthorData(authorid){
   function handleArtist(artist){
     $('.modal-header h2').text(artist.name);
     var image = '<img src="' + artist.images[0].url +'" />';
-    $('.modal-body').append(image);  
+    $('.modal-body').html(image);
   }
 
   request.done(handleArtist);
