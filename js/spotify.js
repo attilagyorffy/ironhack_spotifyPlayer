@@ -8,7 +8,6 @@ $(document).on('ready', function(){
         'Authorization': 'Bearer ' + token
       }
     });
-    console.log(data);
   })
 })
 
@@ -53,7 +52,24 @@ function fetchTracks (trackName) {
 
   var request = $.get('https://api.spotify.com/v1/search?type=track&query='+trackName);
 
-  function handleTracks (tracks) {
+  request.done(handleTracks);
+  request.fail(handleError);
+}
+
+function fetchAuthorData(authorid){
+  var request = $.get('https://api.spotify.com/v1/artists/'+authorid);
+
+  request.done(handleArtist);
+  request.fail(handleError);
+}
+
+function handleArtist(artist){
+  $('.modal-header h2').text(artist.name);
+  var image = '<img src="' + artist.images[0].url +'" />';
+  $('.modal-body').html(image);
+}
+
+function handleTracks (tracks) {
 
     var track = tracks.tracks.items[0];
     $('.title').text(track.name);
@@ -68,26 +84,6 @@ function fetchTracks (trackName) {
     $('progress').val(0);
     fetchAuthorData( track.artists[0].id);
   }
-
   function handleError (err1, err2, err3) {
     console.error('OH NO!!', err1, err2, err3);
   }
-
-  request.done(handleTracks);
-  request.fail(handleError);
-}
-
-function fetchAuthorData(authorid){
-  var request = $.get('https://api.spotify.com/v1/artists/'+authorid);
-
-  function handleArtist(artist){
-    $('.modal-header h2').text(artist.name);
-    var image = '<img src="' + artist.images[0].url +'" />';
-    $('.modal-body').html(image);
-  }
-
-  request.done(handleArtist);
-  request.fail(handleError);
-}
-
-
