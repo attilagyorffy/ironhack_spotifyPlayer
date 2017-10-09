@@ -1,3 +1,16 @@
+$(document).on('ready', function(){
+  var request = $.get('https://y8iewpw0de.execute-api.us-east-2.amazonaws.com/beta');
+  request.done(function(data){
+    var token = data.data.access_token;
+
+    $.ajaxSetup({
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    console.log(data);
+  })
+})
 
 $('.btn-play').on('click', function(e){
   if ($(this).hasClass('playing')) {
@@ -37,6 +50,7 @@ $('.js-artist-list').on('click', 'a',function(e){
 });
 
 function fetchTracks (trackName) {
+
   var request = $.get('https://api.spotify.com/v1/search?type=track&query='+trackName);
 
   function handleTracks (tracks) {
