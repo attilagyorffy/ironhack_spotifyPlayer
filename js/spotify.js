@@ -50,7 +50,7 @@ $('.js-artist-list').on('click', 'a',function(e){
 
 function fetchTracks (trackName) {
 
-  var request = $.get('https://api.spotify.com/v1/search?type=artist&query='+trackName);
+  var request = $.get('https://api.spotify.com/v1/search?type=track&query='+trackName);
 
   request.done(handleTracks);
   request.fail(handleError);
