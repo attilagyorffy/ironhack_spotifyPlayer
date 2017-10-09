@@ -34,7 +34,7 @@ function printTime () {
 // Have printTime be called when the time is updated
 $('.js-player').on('timeupdate', printTime);
 
-$('.js-submit').on('click', function(e){
+$('.js-submit').on('submit', function(e){
 		e.preventDefault();
 		if ($('input[name=query]').val()){
 			trackName = $('input[name=query]').val();
@@ -50,7 +50,7 @@ $('.js-artist-list').on('click', 'a',function(e){
 
 function fetchTracks (trackName) {
 
-  var request = $.get('https://api.spotify.com/v1/search?type=track&query='+trackName);
+  var request = $.get('https://api.spotify.com/v1/search?type=artist&query='+trackName);
 
   request.done(handleTracks);
   request.fail(handleError);
